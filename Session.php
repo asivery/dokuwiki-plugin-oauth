@@ -144,7 +144,9 @@ class Session
     public function getCookie()
     {
         if (!isset($_COOKIE[DOKU_COOKIE])) return false;
-        list($servicename, $oauth, $storageId) = explode('|', $_COOKIE[DOKU_COOKIE]);
+        $tokens = explode('|', $_COOKIE[DOKU_COOKIE]);
+        if (count($tokens) < 3) return false;
+        list($servicename, $oauth, $storageId) = $tokens;
         if ($oauth !== 'oauth') return false;
         return ['servicename' => $servicename, 'storageId' => $storageId];
     }
